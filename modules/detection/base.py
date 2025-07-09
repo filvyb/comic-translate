@@ -4,7 +4,7 @@ from typing import Optional
 
 from ..utils.textblock import TextBlock
 from .utils.general import does_rectangle_fit, do_rectangles_overlap, \
-      get_inpaint_bboxes, filter_and_fix_bboxes, merge_overlapping_boxes
+      filter_and_fix_bboxes, merge_overlapping_boxes
 
 
 class DetectionEngine(ABC):
@@ -54,8 +54,6 @@ class DetectionEngine(ABC):
         # Process text boxes
         if len(text_boxes) > 0:
             for txt_idx, txt_box in enumerate(text_boxes):
-                # Get inpaint boxes for this text box
-                inpaint_boxes = get_inpaint_bboxes(txt_box, image)
                 
                 # If no bubble boxes, all text is free text
                 if len(bubble_boxes) == 0:
@@ -63,7 +61,6 @@ class DetectionEngine(ABC):
                         TextBlock(
                             text_bbox=txt_box,
                             text_class='text_free',
-                            inpaint_bboxes=inpaint_boxes,
                         )
                     )
                     continue
@@ -78,7 +75,6 @@ class DetectionEngine(ABC):
                                 text_bbox=txt_box,
                                 bubble_bbox=bble_box,
                                 text_class='text_bubble',
-                                inpaint_bboxes=inpaint_boxes,
                             )
                         )
                         text_matched[txt_idx] = True  
@@ -90,7 +86,6 @@ class DetectionEngine(ABC):
                                 text_bbox=txt_box,
                                 bubble_bbox=bble_box,
                                 text_class='text_bubble',
-                                inpaint_bboxes=inpaint_boxes,
                             )
                         )
                         text_matched[txt_idx] = True  
@@ -101,7 +96,6 @@ class DetectionEngine(ABC):
                         TextBlock(
                             text_bbox=txt_box,
                             text_class='text_free',
-                            inpaint_bboxes=inpaint_boxes,
                         )
                     )
         

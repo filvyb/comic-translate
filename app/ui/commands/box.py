@@ -2,7 +2,6 @@ import numpy as np
 from PySide6.QtGui import QUndoCommand
 from PySide6.QtCore import QRectF, QPointF
 
-from modules.detection.utils.general import get_inpaint_bboxes
 from .base import RectCommandBase
 from ..canvas.rectangle import MoveableRectItem
 from ..canvas.text_item import TextBlockItem
@@ -13,14 +12,13 @@ class AddRectangleCommand(QUndoCommand, RectCommandBase):
         super().__init__()
         self.viewer = main_page.image_viewer
         self.scene = self.viewer._scene
-        self.photo = self.viewer.photo
         self.blk_list = blk_list
         self.rect_properties = self.save_rect_properties(rect_item)
         self.blk_properties = self.save_blk_properties(blk)
 
     def redo(self):
         if not self.find_matching_rect(self.scene, self.rect_properties):
-            rect_item = self.create_rect_item(self.rect_properties, self.photo)
+            rect_item = self.create_rect_item(self.rect_properties, self.viewer.photo)
             self.viewer.connect_rect_item.emit(rect_item)
             self.viewer.rectangles.append(rect_item)
 
@@ -62,9 +60,6 @@ class BoxesChangeCommand(QUndoCommand, RectCommandBase):
                 blk.xyxy[:] = self.new_xyxy
                 blk.angle = self.new_angle
                 blk.tr_origin_point = self.new_tr_origin
-                image = self.viewer.get_cv2_image()
-                inpaint_bboxes = get_inpaint_bboxes(blk.xyxy, image)
-                blk.inpaint_bboxes = inpaint_bboxes
 
                 self.find_and_update_item(self.scene, self.old_xyxy, self.old_angle, 
                                                 self.new_xyxy, self.new_angle, self.new_tr_origin)
@@ -78,9 +73,6 @@ class BoxesChangeCommand(QUndoCommand, RectCommandBase):
                 blk.xyxy[:] = self.old_xyxy
                 blk.angle = self.old_angle
                 blk.tr_origin_point = self.old_tr_origin
-                image = self.viewer.get_cv2_image()
-                inpaint_bboxes = get_inpaint_bboxes(blk.xyxy, image)
-                blk.inpaint_bboxes = inpaint_bboxes
 
                 self.find_and_update_item(self.scene, self.new_xyxy, self.new_angle, 
                                         self.old_xyxy, self.old_angle, self.old_tr_origin)
@@ -111,12 +103,11 @@ class ClearRectsCommand(QUndoCommand, RectCommandBase):
         super().__init__()
         self.viewer = viewer
         self.scene = viewer._scene
-        self.photo = viewer.photo
         self.properties_list = []
         
     def undo(self):
         for properties in self.properties_list:
-            rect_item = self.create_rect_item(properties, self.photo)
+            rect_item = self.create_rect_item(properties, self.viewer.photo)
             self.viewer.connect_rect_item.emit(rect_item)
             self.viewer.rectangles.append(rect_item)
         self.scene.update()
@@ -124,7 +115,7 @@ class ClearRectsCommand(QUndoCommand, RectCommandBase):
     def redo(self):
         self.properties_list = []
         for item in self.scene.items():
-            if isinstance(item, MoveableRectItem) and item != self.photo:
+            if isinstance(item, MoveableRectItem) and item != self.viewer.photo:
                 self.properties_list.append(self.save_rect_properties(item))
                 self.scene.removeItem(item)
                 self.viewer.selected_rect = None
@@ -135,7 +126,6 @@ class DeleteBoxesCommand(QUndoCommand, RectCommandBase):
         super().__init__()
         self.ct = main_page
         self.viewer = main_page.image_viewer
-        self.photo = self.viewer.photo
         self.scene = self.viewer._scene
         self.rect_properties = self.save_rect_properties(rect_item) if rect_item else None
         self.txt_item_prp = self.save_txt_item_properties(text_item) if text_item else None
@@ -165,7 +155,7 @@ class DeleteBoxesCommand(QUndoCommand, RectCommandBase):
 
     def undo(self):
         if self.rect_properties and not self.find_matching_rect(self.scene, self.rect_properties):
-            rect_item = self.create_rect_item(self.rect_properties, self.photo)
+            rect_item = self.create_rect_item(self.rect_properties, self.viewer.photo)
             self.viewer.connect_rect_item.emit(rect_item)
             self.viewer.rectangles.append(rect_item)
             self.scene.update()
@@ -175,7 +165,7 @@ class DeleteBoxesCommand(QUndoCommand, RectCommandBase):
             self.blk_list.append(blk)
 
         if self.txt_item_prp and not self.find_matching_txt_item(self.scene, self.txt_item_prp):
-            text_item = self.create_new_txt_item(self.txt_item_prp, self.photo)
+            text_item = self.create_new_txt_item(self.txt_item_prp, self.viewer.photo)
             self.viewer.connect_text_item.emit(text_item)
             self.scene.addItem(text_item)
             self.viewer.text_items.append(text_item)
@@ -184,13 +174,12 @@ class AddTextItemCommand(QUndoCommand, RectCommandBase):
     def __init__(self, main_page, text_item):
         super().__init__()
         self.viewer = main_page.image_viewer
-        self.photo = self.viewer.photo
         self.scene = self.viewer._scene
         self.txt_item_prp = self.save_txt_item_properties(text_item)
 
     def redo(self):
         if not self.find_matching_txt_item(self.scene, self.txt_item_prp):
-            text_item = self.create_new_txt_item(self.txt_item_prp, self.photo)
+            text_item = self.create_new_txt_item(self.txt_item_prp, self.viewer.photo)
             self.viewer.connect_text_item.emit(text_item)
             self.scene.addItem(text_item)
             self.viewer.text_items.append(text_item)
