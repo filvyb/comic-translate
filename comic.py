@@ -71,7 +71,7 @@ def get_system_language():
         'nl': 'Nederlands',
         'es': 'Español',
         'it': 'Italiano',
-        'tr': 'Türkçe'
+        'tr': 'Türkçe',
     }
     
     return lang_map.get(lang_code, 'English')  # Default to English if not found
@@ -90,8 +90,11 @@ def load_translation(app, language: str):
         'Nederlands': 'nl',
         'Español': 'es',
         'Italiano': 'it',
-        'Türkçe': 'tr'
-    }.get(language, 'en')
+        'Türkçe': 'tr',
+    }.get(language)
+
+    if not lang_code:
+        return
 
     # Load the translation file
     # if translator.load(f"ct_{lang_code}", "app/translations/compiled"):
