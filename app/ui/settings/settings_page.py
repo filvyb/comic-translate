@@ -6,6 +6,7 @@ from PySide6.QtCore import Signal, QSettings
 from PySide6.QtGui import QFont, QFontDatabase
 
 from .settings_ui import SettingsPageUI
+from modules.utils.device import is_gpu_available
 
 # Dictionary to map old model names to the newest versions in settings
 OCR_MIGRATIONS = {
@@ -72,6 +73,8 @@ class SettingsPage(QtWidgets.QWidget):
         return tool_combos[tool_type].currentText()
 
     def is_gpu_enabled(self):
+        if not is_gpu_available():
+            return False
         return self.ui.use_gpu_checkbox.isChecked()
 
     def get_llm_settings(self):
@@ -281,7 +284,10 @@ class SettingsPage(QtWidgets.QWidget):
         translated_detector = self.ui.reverse_mappings.get(detector, detector)
         self.ui.detector_combo.setCurrentText(translated_detector)
 
-        self.ui.use_gpu_checkbox.setChecked(settings.value('use_gpu', False, type=bool))
+        if is_gpu_available():
+            self.ui.use_gpu_checkbox.setChecked(settings.value('use_gpu', False, type=bool))
+        else:
+             self.ui.use_gpu_checkbox.setChecked(False)
 
         # Load HD strategy settings
         settings.beginGroup('hd_strategy')
