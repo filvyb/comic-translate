@@ -55,6 +55,18 @@ class Messages:
         )
 
     @staticmethod
+    def show_missing_tool_error(parent, tool_name):
+        MMessage.error(
+            text=QCoreApplication.translate(
+                "Messages",
+                "No {} selected. Please select a {} in Settings > Tools."
+            ).format(tool_name, tool_name),
+            parent=parent,
+            duration=None,
+            closable=True
+        )
+
+    @staticmethod
     def show_error_with_copy(parent, title: str, text: str, detailed_text: str | None = None):
         """
         Show a critical error dialog where the main text is selectable and the
