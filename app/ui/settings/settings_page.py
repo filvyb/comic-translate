@@ -281,7 +281,7 @@ class SettingsPage(QtWidgets.QWidget):
         translated_inpainter = self.ui.reverse_mappings.get(inpainter, inpainter)
         self.ui.inpainter_combo.setCurrentText(translated_inpainter)
 
-        detector = settings.value('detector', 'RT-DETR-V2')
+        detector = settings.value('detector', 'RT-DETR-v2')
         translated_detector = self.ui.reverse_mappings.get(detector, detector)
         self.ui.detector_combo.setCurrentText(translated_detector)
 
