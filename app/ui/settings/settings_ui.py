@@ -15,10 +15,6 @@ from .text_rendering_page import TextRenderingPage
 from .export_page import ExportPage
 
 
-current_file_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_file_dir, '..', '..', '..'))
-font_folder_path = os.path.join(project_root, 'resources', 'fonts')
-
 class CurrentPageStack(QtWidgets.QStackedWidget):
     """A QStackedWidget that reports size based on the current page only.
     This ensures the scroll area uses only the active page's size and
