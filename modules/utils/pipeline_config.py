@@ -22,23 +22,20 @@ def get_config(settings_page):
 
     return config
 
-def validate_ocr(main_page, source_lang):
-    """Ensure either API credentials are set or the user is authenticated."""
+def validate_ocr(main_page):
+    """Ensure API credentials are set."""
     settings_page = main_page.settings_page
     tr = settings_page.ui.tr
     settings = settings_page.get_all_settings()
     credentials = settings.get('credentials', {})
-    source_lang_en = main_page.lang_mapping.get(source_lang, source_lang)
     ocr_tool = settings['tools']['ocr']
 
-    # Helper to check authentication or credential
+    # Helper to check credential
     def has_access(service, key_field):
-        return settings_page.is_logged_in() or bool(credentials.get(service, {}).get(key_field))
+        return bool(credentials.get(service, {}).get(key_field))
 
-    # Helper to check authentication or presence of multiple credential fields
+    # Helper to check presence of multiple credential fields
     def has_all_credentials(service, keys):
-        if settings_page.is_logged_in():
-            return True
         creds = credentials.get(service, {})
         return all(creds.get(k) for k in keys)
 
@@ -67,7 +64,7 @@ def validate_ocr(main_page, source_lang):
 
 
 def validate_translator(main_page, source_lang, target_lang):
-    """Ensure either API credentials are set or the user is authenticated, plus check compatibility."""
+    """Ensure API credentials are set, plus check compatibility."""
     settings_page = main_page.settings_page
     tr = settings_page.ui.tr
     settings = settings_page.get_all_settings()
@@ -75,7 +72,7 @@ def validate_translator(main_page, source_lang, target_lang):
     translator_tool = settings['tools']['translator']
 
     def has_access(service, key_field):
-        return settings_page.is_logged_in() or bool(credentials.get(service, {}).get(key_field))
+        return bool(credentials.get(service, {}).get(key_field))
 
     # Credential checks
     if translator_tool == tr("DeepL"):
@@ -134,7 +131,7 @@ def font_selected(main_page):
     return True
 
 def validate_settings(main_page, source_lang, target_lang):
-    if not validate_ocr(main_page, source_lang):
+    if not validate_ocr(main_page):
         return False
     if not validate_translator(main_page, source_lang, target_lang):
         return False
