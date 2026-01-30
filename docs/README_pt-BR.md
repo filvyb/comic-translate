@@ -1,7 +1,9 @@
-# Tradução de Quadrinhos
+# Comic Translate Community (Tradução de Quadrinhos)
 [Inglês](../README.md) | [Coreano](README_ko.md) | [Francês](README_fr.md) | [Chinês](README_zh-CN.md) | [Japonês](README_ja.md) | Português Brasileiro
 
 <img src="https://i.imgur.com/aNuwiJb.png">
+
+> **Nota:** Este é um fork comunitário do [projeto Comic Translate original](https://github.com/ogkalu2/comic-translate). Ele incorpora correções de bugs e novos recursos, mas não inclui o modelo de assinatura introduzido no original.
 
 ## Introdução
 Existem muitos tradutores automáticos de mangá. Pouquíssimos suportam adequadamente quadrinhos de outros tipos em outros idiomas. 
@@ -163,11 +165,9 @@ Você pode definir suas Chaves de API indo para Configurações > Credenciais
 
 ### OCR
 Por padrão:
-* [EasyOCR](https://github.com/JaidedAI/EasyOCR) para Inglês
 * [manga-ocr](https://github.com/kha-white/manga-ocr) para Japonês
-* [Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo) para Coreano 
-* [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) para Chinês 
-* [GPT-4o](https://platform.openai.com/docs/guides/vision) para Francês, Russo, Alemão, Holandês, Espanhol e Italiano. Pago, requer uma Chave de API.
+* [Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo) para Coreano
+* [PPOCRv5](https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv5/PP-OCRv5.html) para todo o resto
 
 Opcional:
 
@@ -175,6 +175,8 @@ Estes podem ser usados ​​para qualquer um dos idiomas suportados. É necess�
 
 * [Google Cloud Vision](https://cloud.google.com/vision/docs/ocr)
 * [Microsoft Azure Vision](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr)
+* GPT-4.1-mini
+* Gemini-2.0-Flash
 
 ### Inpainting
 Um checkpoint de [LaMa](https://github.com/advimman/lama) [finetuned para Manga/Anime](https://huggingface.co/dreMaz/AnimeMangaInpainting) para remover o texto detectado pelo segmentador. Implementação cortesia de [lama-cleaner](https://github.com/Sanster/lama-cleaner)
@@ -182,8 +184,7 @@ Um checkpoint de [LaMa](https://github.com/advimman/lama) [finetuned para Manga/
 <img src="https://i.imgur.com/cVVGVXp.jpg" width="49%"> <img src="https://i.imgur.com/bLkPyqG.jpg" width="49%">
 
 ### Tradução
-Atualmente, suporta o uso de GPT-4o, GPT-4o mini, DeepL, Claude-3-Opus, Claude-3.5-Sonnet, Claude-3-Haiku,
-Gemini-1.5-Flash, Gemini-1.5-Pro, Yandex, Google Tradutor e Microsoft Translator.
+Atualmente, suporta GPT, Claude, Gemini, Deepseek, Grok, DeepL, Yandex, Google Tradutor, Microsoft Translator e endpoints personalizados compatíveis com OpenAI.
 
 Todos os LLMs recebem o texto da página inteira para auxiliar nas traduções.
 Há também a opção de fornecer a própria imagem para mais contexto.

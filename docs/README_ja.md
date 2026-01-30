@@ -1,6 +1,8 @@
-# コミック翻訳
+# Comic Translate Community (コミック翻訳)
 
 https://github.com/ogkalu2/comic-translate/assets/115248977/b57360d3-eaad-4a93-bc46-94c01d38927c
+
+> **注意:** これは[オリジナルのComic Translateプロジェクト](https://github.com/ogkalu2/comic-translate)のコミュニティフォークです。バグ修正と新機能を統合していますが、オリジナルで導入されたサブスクリプションモデルは含まれていません。
 
 ## はじめに
 多くの自動マンガ翻訳機は存在します。しかし、他の言語の他の種類のコミックを適切にサポートするものは非常に少ないです。このプロジェクトは、GPT-4oの能力を活用して、世界中のコミックを翻訳するために作成されました。現在、英語、韓国語、日本語、フランス語、簡体字中国語、繁体字中国語、ロシア語、ドイツ語、オランダ語、スペイン語、イタリア語へのおよびからの翻訳をサポートしています。以下の言語に翻訳できますが、翻訳元としては使用できません: トルコ語、ポーランド語、ポルトガル語、ブラジルポルトガル語。
@@ -139,11 +141,9 @@ raise RarCannotExec("Cannot find working tool")
 
 ### OCR
 デフォルトでは：
-* 英語には[EasyOCR](https://github.com/JaidedAI/EasyOCR)
 * 日本語には[manga-ocr](https://github.com/kha-white/manga-ocr)
 * 韓国語には[Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo)
-* 中国語には[PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)
-* フランス語、ロシア語、ドイツ語、オランダ語、スペイン語、イタリア語には[GPT-4o](https://platform.openai.com/docs/guides/vision)がデフォルト（有料、APIキーが必要）
+* その他すべてには[PPOCRv5](https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv5/PP-OCRv5.html)
 
 オプション：
 
@@ -151,6 +151,8 @@ raise RarCannotExec("Cannot find working tool")
 
 * [Google Cloud Vision](https://cloud.google.com/vision/docs/ocr)
 * [Microsoft Azure Vision](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr)
+* GPT-4.1-mini
+* Gemini-2.0-Flash
 
 ### インペインティング
 [Manga/Anime finetuned](https://huggingface.co/dreMaz/AnimeMangaInpainting)を使用する[lama](https://github.com/advimman/lama)チェックポイントで、セグメンターによって検出されたテキストを除去します。実装は[lama-cleaner](https://github.com/Sanster/lama-cleaner)の提供です。
@@ -158,9 +160,10 @@ raise RarCannotExec("Cannot find working tool")
 <img src="https://i.imgur.com/cVVGVXp.jpg" width="49%"> <img src="https://i.imgur.com/bLkPyqG.jpg" width="49%">
 
 ### 翻訳
-現在のところ、GPT-4o、GPT-4、GPT-3.5、DeepL、Google Translateをサポートしています。
-すべてのGPTモデルには、翻訳を補助するためにページ全体のテキストの文脈が提供されます。
-特にGPT-4oには、ページの画像、元のテキストを含むページが提供され、（フランス語、ロシア語、ドイツ語、オランダ語、スペイン語、イタリア語のような）認識が得意な言語には画像とインペインティングされた画像が提供されます。
+現在、GPT、Claude、Gemini、Deepseek、Grok、DeepL、Yandex、Google Translate、Microsoft Translator、およびカスタムOpenAI互換エンドポイントをサポートしています。
+
+すべてのLLMには、翻訳を補助するためにページ全体のテキストが提供されます。
+追加のコンテキストのために画像自体を提供するオプションもあります。
 
 ### テキストレンダリング
 バウンディングボックス内で折り返されたテキストをレンダリングするためにPILを使用しています。

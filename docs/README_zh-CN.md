@@ -1,6 +1,8 @@
-# 漫画翻译
+# Comic Translate Community (漫画翻译)
 
 https://github.com/ogkalu2/comic-translate/assets/115248977/b57360d3-eaad-4a93-bc46-94c01d38927c
+
+> **注意：** 这是[原版 Comic Translate 项目](https://github.com/ogkalu2/comic-translate)的社区分支。它合并了错误修复和新功能，但不包含原版中引入的订阅模式。
 
 ## 简介
 
@@ -152,11 +154,9 @@ raise RarCannotExec("Cannot find working tool")
 ### OCR
 
 默认为：
-* [EasyOCR](https://github.com/JaidedAI/EasyOCR) 用于英文
 * [manga-ocr](https://github.com/kha-white/manga-ocr) 用于日文
-* [Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo) 用于韩文 
-* [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) 用于中文 
-* [GPT-4o](https://platform.openai.com/docs/guides/vision) 用于法文、俄文、德文、荷兰文、西班牙文和意大利文。需付费，需要 API 密钥。
+* [Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo) 用于韩文
+* [PPOCRv5](https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv5/PP-OCRv5.html) 用于其他语言
 
 可选：
 
@@ -164,6 +164,8 @@ raise RarCannotExec("Cannot find working tool")
 
 * [Google Cloud Vision](https://cloud.google.com/vision/docs/ocr)
 * [Microsoft Azure Vision](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr)
+* GPT-4.1-mini
+* Gemini-2.0-Flash
 
 ### 图像修补
 
@@ -173,8 +175,10 @@ raise RarCannotExec("Cannot find working tool")
 
 ### 翻译
 
-目前支持使用 GPT-4o、GPT-4、GPT-3.5、DeepL 和 Google Translate。
-所有 GPT 模型都会读取整个页面文本的上下文以辅助翻译。特别是 GPT-4o 还会提供页面的图像，用于它擅长识别的语言（法文、俄文、德文、荷兰文、西班牙文、意大利文）中的原始文本所对应的页面图像，及其余语言的修补图像。
+目前支持 GPT、Claude、Gemini、Deepseek、Grok、DeepL、Yandex、Google Translate、Microsoft Translator 以及自定义 OpenAI 兼容端点。
+
+所有 LLM 都会读取整个页面文本以辅助翻译。
+还可以选择提供图像本身以获取更多上下文。
 
 ### 文本渲染
 

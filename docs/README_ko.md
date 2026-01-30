@@ -1,6 +1,8 @@
-# 만화 번역
+# Comic Translate Community (만화 번역)
 
 https://github.com/ogkalu2/comic-translate/assets/115248977/afb01782-71a7-4bb7-9869-4f45da5a7bb5
+
+> **참고:** 이것은 [원본 Comic Translate 프로젝트](https://github.com/ogkalu2/comic-translate)의 커뮤니티 포크입니다. 버그 수정과 새로운 기능을 병합하지만, 원본에 도입된 구독 모델은 포함하지 않습니다.
 
 ## 소개
 자동 만화 번역기가 많이 있습니다. 하지만 다른 언어로 된 여러 종류의 코믹스를 제대로 지원하는 번역기는 많지 않습니다.
@@ -131,11 +133,9 @@ API 키를 설정하려면 설정 > 자격 증명 설정으로 이동하세요.
 
 ### OCR
 기본 설정으로:
-* [EasyOCR](https://github.com/JaidedAI/EasyOCR) 영어용
 * [manga-ocr](https://github.com/kha-white/manga-ocr) 일본어용
-* [Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo) 한국어용 
-* [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) 중국어용 
-* [GPT-4-Vision](https://platform.openai.com/docs/guides/vision) 프랑스어, 러시아어, 독일어, 네덜란드어, 스페인어, 이탈리아어용. 유료로 API 키가 필요합니다.
+* [Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo) 한국어용
+* [PPOCRv5](https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv5/PP-OCRv5.html) 기타 모든 언어용
 
 선택적으로:
 
@@ -143,14 +143,17 @@ API 키를 설정하려면 설정 > 자격 증명 설정으로 이동하세요.
 
 * [Google Cloud Vision](https://cloud.google.com/vision/docs/ocr)
 * [Microsoft Azure Vision](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr)
+* GPT-4.1-mini
+* Gemini-2.0-Flash
 
 ### 이미지 복원
 분할기에 의해 감지된 텍스트를 제거하기 위해 [lama](https://github.com/advimman/lama) 체크포인트를 사용한 [망가/애니메이션 미세조정](https://huggingface.co/dreMaz/AnimeMangaInpainting) 입니다. [lama-cleaner](https://github.com/Sanster/lama-cleaner)의 구현에 감사드립니다.
 
 ### 번역
-현재 GPT-4-Vision, GPT-4, GPT-3.5, DeepL, Google 번역을 사용할 수 있습니다.
-모든 GPT 모델은 번역을 돕기 위해 해당 페이지 전체 텍스트의 맥락을 입력받습니다.
-특히 GPT-4-Vision은 해당 언어를 능숙하게 인식하는 경우(프랑스어, 러시아어, 독일어, 네덜란드어, 스페인어, 이탈리아어) 원본 텍스트와 함께 페이지 이미지, 복원된 이미지도 제공받습니다.
+현재 GPT, Claude, Gemini, Deepseek, Grok, DeepL, Yandex, Google 번역, Microsoft Translator 및 사용자 지정 OpenAI 호환 엔드포인트를 지원합니다.
+
+모든 LLM은 번역을 돕기 위해 전체 페이지 텍스트를 제공받습니다.
+추가 맥락을 위해 이미지 자체를 제공하는 옵션도 있습니다.
 
 ### 텍스트 렌더링
 말풍선 및 텍스트에서 얻은 경계 상자 내에 텍스트를 렌더링하는 PIL입니다.

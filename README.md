@@ -1,7 +1,9 @@
-# Comic Translate
+# Comic Translate Community
 English | [한국어](docs/README_ko.md) | [Français](docs/README_fr.md) | [简体中文](docs/README_zh-CN.md) | [日本語](docs/README_ja.md) | [Português Brasileiro](docs/README_pt-BR.md)
 
 <img src="https://i.imgur.com/QUVK6mK.png">
+
+> **Note:** This is a community fork of the [original Comic Translate project](https://github.com/ogkalu2/comic-translate). It merges bug fixes and new features but does not include the subscription model introduced in the original.
 
 ## Intro
 Many Automatic Manga Translators exist. Very few properly support comics of other kinds in other languages. 
@@ -156,7 +158,7 @@ Algorithmic segmentation based on the boxes provided from the detection model.
 ### OCR
 By Default:
 * [manga-ocr](https://github.com/kha-white/manga-ocr) for Japanese
-* [Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo) for Korean 
+* [Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo) for Korean
 * [PPOCRv5](https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv5/PP-OCRv5.html) for Everything Else
 
 Optional:
@@ -165,6 +167,8 @@ These can be used for any of the supported languages. An API Key is required.
 
 * [Google Cloud Vision](https://cloud.google.com/vision/docs/ocr)
 * [Microsoft Azure Vision](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr)
+* GPT-4.1-mini
+* Gemini-2.0-Flash
 
 ### Inpainting
 To remove the segmented text
@@ -174,8 +178,8 @@ To remove the segmented text
 <img src="https://i.imgur.com/cVVGVXp.jpg" width="49%"> <img src="https://i.imgur.com/bLkPyqG.jpg" width="49%">
 
 ### Translation
-Currently, this supports using GPT-4.1, DeepL, Claude-3, 
-Gemini-2.5, Yandex, Google Translate and Microsoft Azure Translator.
+Currently, this supports using GPT, Claude, Gemini, Deepseek, Grok, DeepL,
+Yandex, Google Translate, Microsoft Translator, and Custom OpenAI-compatible endpoints.
 
 All LLMs are fed the entire page text to aid translations. 
 There is also the Option to provide the Image itself for further context. 

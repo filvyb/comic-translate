@@ -1,6 +1,8 @@
-# Traduction de Bandes Dessinées
+# Comic Translate Community (Traduction de Bandes Dessinées)
 
 https://github.com/ogkalu2/comic-translate/assets/115248977/b57360d3-eaad-4a93-bc46-94c01d38927c
+
+> **Note :** Ceci est un fork communautaire du [projet Comic Translate original](https://github.com/ogkalu2/comic-translate). Il intègre des correctifs et de nouvelles fonctionnalités, mais n'inclut pas le modèle d'abonnement introduit dans l'original.
 
 ## Introduction
 De nombreux traducteurs automatiques de mangas existent. Très peu prennent correctement en charge les bandes dessinées d'autres types dans d'autres langues.
@@ -135,11 +137,9 @@ Vous pouvez définir vos clés API en allant dans Paramètres > Définir les ide
 
 ### OCR
 Par Défaut :
-* [EasyOCR](https://github.com/JaidedAI/EasyOCR) pour l'anglais
-* [OCR pour mangas](https://github.com/kha-white/manga-ocr) pour le japonais
+* [manga-ocr](https://github.com/kha-white/manga-ocr) pour le japonais
 * [Pororo](https://github.com/yunwoong7/korean_ocr_using_pororo) pour le coréen
-* [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) pour le chinois
-* [GPT-4-Vision](https://platform.openai.com/docs/guides/vision) pour le français, le russe, l'allemand, le néerlandais, l'espagnol et l'italien. Payant, nécessite une clé API.
+* [PPOCRv5](https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv5/PP-OCRv5.html) pour tout le reste
 
 Optionnel :
 
@@ -147,6 +147,8 @@ Ces outils peuvent être utilisés pour toutes les langues prises en charge. Une
 
 * [Google Cloud Vision](https://cloud.google.com/vision/docs/ocr)
 * [Microsoft Azure Vision](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr)
+* GPT-4.1-mini
+* Gemini-2.0-Flash
 
 ### Effacement
 Un point de contrôle [lama](https://github.com/advimman/lama) [affiné pour les mangas/anime](https://huggingface.co/dreMaz/AnimeMangaInpainting) pour retirer les textes détectés par le segmenteur. Implémentation gracieuseté de [lama-cleaner](https://github.com/Sanster/lama-cleaner)
@@ -154,10 +156,10 @@ Un point de contrôle [lama](https://github.com/advimman/lama) [affiné pour les
 <img src="https://i.imgur.com/cVVGVXp.jpg" width="49%"> <img src="https://i.imgur.com/bLkPyqG.jpg" width="49%">
 
 ### Traduction
-Actuellement, cela prend en charge l'utilisation de GPT-4-Vision, GPT-4, GPT-3.5, DeepL et Google Translate.
-Tous les modèles GPT sont alimentés par le contexte du texte entier de la page pour aider aux traductions.
-GPT-4-Vision en particulier est également fourni l'image de la page, la page avec le texte original pour
-les langues qu'il est compétent à reconnaître (français, russe, allemand, néerlandais, espagnol, italien) et l'Image Effacée pour le reste.
+Actuellement, cela prend en charge GPT, Claude, Gemini, Deepseek, Grok, DeepL, Yandex, Google Translate, Microsoft Translator, et les endpoints personnalisés compatibles OpenAI.
+
+Tous les LLMs reçoivent le texte entier de la page pour aider aux traductions.
+Il y a aussi l'option de fournir l'image elle-même pour plus de contexte.
 
 ### Rendu de Texte
 PIL pour le rendu du texte enveloppé dans des boîtes délimitées obtenues à partir des bulles et du texte.
