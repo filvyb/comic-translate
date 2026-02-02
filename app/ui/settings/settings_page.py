@@ -367,17 +367,34 @@ class SettingsPage(QtWidgets.QWidget):
 
         self._loading_settings = False
 
+    def _ask_yes_no(self, title: str, text: str, default_yes: bool = False) -> bool:
+        msg_box = QtWidgets.QMessageBox(self)
+        msg_box.setIcon(QtWidgets.QMessageBox.Icon.Question)
+        msg_box.setWindowTitle(title)
+        msg_box.setText(text)
+        yes_btn = msg_box.addButton(self.tr("Yes"), QtWidgets.QMessageBox.ButtonRole.AcceptRole)
+        no_btn = msg_box.addButton(self.tr("No"), QtWidgets.QMessageBox.ButtonRole.RejectRole)
+        msg_box.setDefaultButton(yes_btn if default_yes else no_btn)
+        msg_box.exec()
+        return msg_box.clickedButton() == yes_btn
+
     def on_language_changed(self, new_language):
         if not self._loading_settings:  
             self.show_restart_dialog()
 
     def show_restart_dialog(self):
-        msg_box = QtWidgets.QMessageBox(self)
-        msg_box.setWindowTitle(self.tr("Restart Required"))
-        msg_box.setText(self.tr("Please restart the application for the language changes to take effect."))
-        msg_box.setIcon(QtWidgets.QMessageBox.Information)
-        msg_box.setStandardButtons(QtWidgets.QMessageBox.Ok)
-        msg_box.exec()
+        from modules.utils.common_utils import restart_application
+
+        response = self._ask_yes_no(
+            self.tr("Restart Required"),
+            self.tr("The application needs to restart for the language changes to take effect.\n\nRestart now?"),
+            default_yes=True
+        )
+
+        if response:
+            # Save settings before restarting
+            self.save_settings()
+            restart_application()
 
     def get_min_font_size(self):
         return int(self.ui.min_font_spinbox.value())
