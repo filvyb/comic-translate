@@ -42,6 +42,7 @@ class SettingsPage(QtWidgets.QWidget):
         self.ui = SettingsPageUI(self)
         self._setup_connections()
         self._loading_settings = False
+        self._current_language = None  # Track current language for revert
 
         # Use the Settings UI directly; inner content is scrollable on the
         # right side (see settings_ui.py). This keeps the left navbar fixed.
@@ -365,6 +366,9 @@ class SettingsPage(QtWidgets.QWidget):
                     self.ui.credential_widgets[f"{translated_service}_api_key"].setText(settings.value(f"{translated_service}_api_key", ''))
         settings.endGroup()
 
+        # Initialize current language tracker after loading
+        self._current_language = self.ui.lang_combo.currentText()
+
         self._loading_settings = False
 
     def _ask_yes_no(self, title: str, text: str, default_yes: bool = False) -> bool:
@@ -379,22 +383,28 @@ class SettingsPage(QtWidgets.QWidget):
         return msg_box.clickedButton() == yes_btn
 
     def on_language_changed(self, new_language):
-        if not self._loading_settings:  
-            self.show_restart_dialog()
+        if not self._loading_settings:
+            self.show_restart_dialog(new_language)
 
-    def show_restart_dialog(self):
+    def show_restart_dialog(self, new_language):
         from modules.utils.common_utils import restart_application
 
         response = self._ask_yes_no(
             self.tr("Restart Required"),
-            self.tr("The application needs to restart for the language changes to take effect.\n\nRestart now?"),
+            self.tr("The application needs to restart for the language changes to take effect.\nRestart now?"),
             default_yes=True
         )
 
         if response:
             # Save settings before restarting
             self.save_settings()
+            self._current_language = new_language  # Update tracking
             restart_application()
+        else:
+            # User declined - revert to previous language
+            self._loading_settings = True  # Prevent triggering the handler again
+            self.ui.lang_combo.setCurrentText(self._current_language)
+            self._loading_settings = False
 
     def get_min_font_size(self):
         return int(self.ui.min_font_spinbox.value())
