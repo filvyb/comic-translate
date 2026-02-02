@@ -65,9 +65,8 @@ class SettingsPageUI(QtWidgets.QWidget):
                                     self.tr("Gemini-3.0-Flash"), self.tr("Gemini-3.0-Pro"), self.tr("Yandex"), self.tr("Google Translate"),
                                     self.tr("Microsoft Translator"), self.tr("Deepseek-v3"), self.tr("Grok-4.1-Fast"), self.tr("Custom"),]
         
-        self.languages = ['English', '한국어', 'Français', '日本語', 
-         '简体中文', '繁體中文', 'русский', 'Deutsch', 
-         'Nederlands', 'Español', 'Italiano', 'Türkçe']
+        self.languages = ['English', '한국어', 'Français', '简体中文',
+         'русский', 'Deutsch', 'Español', 'Italiano', 'Türkçe']
         
         self.nav_cards = []  
         self.current_highlighted_nav = None
@@ -77,12 +76,9 @@ class SettingsPageUI(QtWidgets.QWidget):
             "English": "English",
             "한국어": "한국어",
             "Français": "Français",
-            "日本語": "日本語",
             "简体中文": "简体中文",
-            "繁體中文": "繁體中文",
             "русский": "русский",
             "Deutsch": "Deutsch",
-            "Nederlands": "Nederlands",
             "Español": "Español",
             "Italiano": "Italiano",
             "Türkçe": "Türkçe",

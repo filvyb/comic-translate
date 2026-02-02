@@ -108,22 +108,24 @@ class SettingsPage(QtWidgets.QWidget):
             return w.text() if w is not None else None
 
         if service:
+            # Translate service name to English for comparison
+            english_service = self.ui.value_mappings.get(service, service)
             creds = {'save_key': save_keys}
-            if service == "Microsoft Azure":
+            if english_service == "Microsoft Azure":
                 creds.update({
                     'api_key_ocr': _text_or_none("Microsoft Azure_api_key_ocr"),
                     'api_key_translator': _text_or_none("Microsoft Azure_api_key_translator"),
                     'region_translator': _text_or_none("Microsoft Azure_region"),
                     'endpoint': _text_or_none("Microsoft Azure_endpoint"),
                 })
-            elif service == "Custom":
+            elif english_service == "Custom":
                 for field in ("api_key", "api_url", "model"):
                     creds[field] = _text_or_none(f"Custom_{field}")
-            elif service == "Yandex":
+            elif english_service == "Yandex":
                 creds['api_key'] = _text_or_none("Yandex_api_key")
                 creds['folder_id'] = _text_or_none("Yandex_folder_id")
             else:
-                creds['api_key'] = _text_or_none(f"{service}_api_key")
+                creds['api_key'] = _text_or_none(f"{english_service}_api_key")
 
             return creds
 

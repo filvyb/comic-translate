@@ -361,10 +361,9 @@ def get_system_language():
         'en': 'English',
         'ko': '한국어',
         'fr': 'Français',
-        'ja': '日本語',
+        'zh': '简体中文',
         'ru': 'русский',
         'de': 'Deutsch',
-        'nl': 'Nederlands',
         'es': 'Español',
         'it': 'Italiano',
         'tr': 'Türkçe',
@@ -378,12 +377,9 @@ def load_translation(app, language: str):
         'English': 'en',
         '한국어': 'ko',
         'Français': 'fr',
-        '日本語': 'ja',
-        '简体中文': 'zh_CN',
-        '繁體中文': 'zh_TW',
+        '简体中文': 'zh-CN',
         'русский': 'ru',
         'Deutsch': 'de',
-        'Nederlands': 'nl',
         'Español': 'es',
         'Italiano': 'it',
         'Türkçe': 'tr',
@@ -392,8 +388,10 @@ def load_translation(app, language: str):
     if not lang_code:
         return
 
-    # Load the translation file
-    if translator.load(f":/translations/ct_{lang_code}.qm"):
+    # Load the translation file from filesystem
+    current_file_dir = os.path.dirname(os.path.abspath(__file__))
+    tr_dir = os.path.join(current_file_dir, 'resources', 'translations', 'compiled')
+    if translator.load(f"ct_{lang_code}", tr_dir):
         app.installTranslator(translator)
     else:
         print(f"Failed to load translation for {language}")
