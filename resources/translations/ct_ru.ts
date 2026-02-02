@@ -1462,8 +1462,8 @@ Restart now?</source>
     </message>
     <message>
         <location filename="../../app/ui/settings/settings_ui.py" line="60"/>
-        <source>Gemini-2.0-Flash</source>
-        <translation>Gemini-2.0-Flash</translation>
+        <source>Gemini-2.5-Flash</source>
+        <translation>Gemini-2.5-Flash</translation>
     </message>
     <message>
         <location filename="../../app/ui/settings/settings_ui.py" line="73"/>
@@ -1615,8 +1615,8 @@ Restart now?</source>
     <message>
         <location filename="../../app/ui/settings/settings_ui.py" line="76"/>
         <location filename="../../app/ui/settings/settings_ui.py" line="111"/>
-        <source>Deepseek-v3</source>
-        <translation>Deepseek-v3</translation>
+        <source>Deepseek Chat</source>
+        <translation>Deepseek Chat</translation>
     </message>
     <message>
         <location filename="../../app/ui/settings/settings_ui.py" line="118"/>
