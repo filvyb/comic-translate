@@ -794,8 +794,10 @@ back on the Image (for further editing)</source>
     </message>
     <message>
         <location filename="../../app/ui/settings/export_page.py" line="39"/>
-        <source>Applies only when auto-save is enabled and the input is an archive (PDF/CBZ/CBR/EPUB/etc). Translated archives are saved as &lt;filename&gt;_translated.&lt;ext&gt; next to the original.</source>
-        <translation>Применяется только при включённом автосохранении и если входной файл — архив (PDF/CBZ/CBR/EPUB и т. д.). Переведённые архивы сохраняются рядом с оригиналом как &lt;filename&gt;_translated.&lt;ext&gt;.</translation>
+        <source>Applies only when auto-save is enabled and the input is an archive (PDF/CBZ/CBR/EPUB/etc).
+Translated archives are saved as &lt;filename&gt;_translated.&lt;ext&gt; next to the original.</source>
+        <translation>Применяется только при включённом автосохранении и если входной файл — архив (PDF/CBZ/CBR/EPUB и т. д.).
+Переведённые архивы сохраняются рядом с оригиналом как &lt;filename&gt;_translated.&lt;ext&gt;.</translation>
     </message>
     <message>
         <location filename="../../app/ui/settings/export_page.py" line="48"/>
@@ -1567,8 +1569,8 @@ Restart now?</source>
     </message>
     <message>
         <location filename="../../app/ui/settings/settings_ui.py" line="301"/>
-        <source>Translation Guidance</source>
-        <translation>Руководство по переводу</translation>
+        <source>LLMs</source>
+        <translation>LLMs</translation>
     </message>
     <message>
         <location filename="../../app/ui/settings/settings_ui.py" line="304"/>
@@ -1714,7 +1716,7 @@ Restart now?</source>
     </message>
     <message>
         <source>LLMs</source>
-        <translation type="vanished">LLM</translation>
+        <translation type="vanished">LLMs</translation>
     </message>
     <message>
         <location filename="../../app/ui/settings/settings_ui.py" line="302"/>
