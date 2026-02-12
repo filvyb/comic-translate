@@ -2,16 +2,13 @@ from .dayu_widgets.message import MMessage
 from PySide6.QtCore import QCoreApplication, Qt
 from PySide6 import QtWidgets
 
-# Shorthand for translations
-_translate = QCoreApplication.translate
-
 class Messages:
 
     @staticmethod
     def show_translation_complete(parent):
 
         MMessage.success(
-            text=_translate(
+            text=QCoreApplication.translate(
                 "Messages", 
                 "Comic has been Translated!"
             ),
@@ -23,7 +20,7 @@ class Messages:
     @staticmethod
     def select_font_error(parent):
         MMessage.error(
-            text=_translate(
+            text=QCoreApplication.translate(
                 "Messages", 
                 "No Font selected.\nGo to Settings > Text Rendering > Font to select or import one "
             ),
@@ -35,7 +32,7 @@ class Messages:
     @staticmethod
     def show_not_logged_in_error(parent):
         MMessage.error(
-            text=_translate(
+            text=QCoreApplication.translate(
                 "Messages",
                 "Please provide API credentials in Settings > Credentials to continue."
             ),
@@ -47,7 +44,7 @@ class Messages:
     @staticmethod
     def show_translator_language_not_supported(parent):
         MMessage.error(
-            text=_translate(
+            text=QCoreApplication.translate(
                 "Messages",
                 "The translator does not support the selected target language. Please choose a different language or tool."
             ),
@@ -59,10 +56,51 @@ class Messages:
     @staticmethod
     def show_missing_tool_error(parent, tool_name):
         MMessage.error(
-            text=_translate(
+            text=QCoreApplication.translate(
                 "Messages",
                 "No {} selected. Please select a {} in Settings > Tools."
             ).format(tool_name, tool_name),
+            parent=parent,
+            duration=None,
+            closable=True
+        )
+
+    @staticmethod
+    def show_insufficient_credits_error(parent, details: str = None):
+        """
+        Show an error message when the user has insufficient credits.
+
+        Args:
+            parent: parent widget
+            details: optional detailed message from backend
+        """
+        msg = QtWidgets.QMessageBox(parent)
+        msg.setIcon(QtWidgets.QMessageBox.Warning)
+        msg.setWindowTitle(QCoreApplication.translate("Messages", "Insufficient Credits"))
+        msg.setText(QCoreApplication.translate(
+            "Messages",
+            "Insufficient credits to perform this action.\nGo to Settings > Account to buy more credits."
+        ))
+
+        if details:
+            msg.setDetailedText(details)
+
+        ok_btn = msg.addButton(QCoreApplication.translate("Messages", "OK"), QtWidgets.QMessageBox.ButtonRole.AcceptRole)
+        msg.setDefaultButton(ok_btn)
+        msg.exec()
+
+    @staticmethod
+    def show_custom_not_configured_error(parent):
+        """
+        Show an error message when Custom is selected without proper configuration.
+        Guides users to use the Credits system instead.
+        """
+        MMessage.error(
+            text=QCoreApplication.translate(
+                "Messages",
+                "Custom requires advanced API configuration. Most users should use the Credits system instead.\n"
+                "Please sign in via Settings > Account to use credits, or configure Custom API settings in Settings > Advanced."
+            ),
             parent=parent,
             duration=None,
             closable=True
@@ -117,20 +155,20 @@ class Messages:
             context: optional context ('translation', 'ocr', or None for generic)
         """
         messages = {
-            500: _translate("Messages", "An unexpected error occurred on the server.\nPlease try again later."),
-            502: _translate("Messages", "The server received an invalid response from an upstream provider.\nPlease try again later."),
-            503: _translate("Messages", "The server is currently unavailable or overloaded.\nPlease try again later."),
-            504: _translate("Messages", "The server timed out waiting for a response.\nPlease try again later."),
+            500: QCoreApplication.translate("Messages", "An unexpected error occurred on the server.\nPlease try again later."),
+            502: QCoreApplication.translate("Messages", "The server received an invalid response from an upstream provider.\nPlease try again later."),
+            503: QCoreApplication.translate("Messages", "The server is currently unavailable or overloaded.\nPlease try again later."),
+            504: QCoreApplication.translate("Messages", "The server timed out waiting for a response.\nPlease try again later."),
         }
         
         # Context-aware 501 message
         if status_code == 501:
             if context == 'ocr':
-                text = _translate("Messages", "The selected text recognition tool is currently unavailable.\nPlease select a different tool in Settings.")
+                text = QCoreApplication.translate("Messages", "The selected text recognition tool is currently unavailable.\nPlease select a different tool in Settings.")
             elif context == 'translation':
-                text = _translate("Messages", "The selected translator is currently unavailable.\nPlease select a different tool in Settings.")
+                text = QCoreApplication.translate("Messages", "The selected translator is currently unavailable.\nPlease select a different tool in Settings.")
             else:
-                text = _translate("Messages", "The selected tool is currently unavailable.\nPlease select a different tool in Settings.")
+                text = QCoreApplication.translate("Messages", "The selected tool is currently unavailable.\nPlease select a different tool in Settings.")
         else:
             text = messages.get(status_code, messages[500])
         
@@ -147,7 +185,7 @@ class Messages:
         Show a user-friendly error for network/connectivity issues.
         """
         MMessage.error(
-            text=_translate(
+            text=QCoreApplication.translate(
                 "Messages", 
                 "Unable to connect to the server.\nPlease check your internet connection."
             ),
@@ -169,10 +207,10 @@ class Messages:
             action_msg = "Translation blocked"
             suggestion = "Please try using a different translator."
 
-        base_msg = _translate(
+        base_msg = QCoreApplication.translate(
             "Messages", 
-            f"{action_msg}: The content was flagged by safety filters.\n{suggestion}"
-        )
+            "{0}: The content was flagged by the AI provider's safety filters.\n{1}"
+        ).format(action_msg, suggestion)
         msg_text = f"{base_msg}\n{details}" if details else base_msg
 
         MMessage.error(
