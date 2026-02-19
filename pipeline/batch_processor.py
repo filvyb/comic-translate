@@ -8,6 +8,7 @@ import imkit as imk
 import time
 from datetime import datetime
 from typing import List
+from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QColor
 
 from modules.detection.processor import TextBlockDetector
@@ -157,8 +158,11 @@ class BatchProcessor:
                     blk_list = sort_blk_list(blk_list, rtl)
                     
                 except Exception as e:
+                    # if it's a connection/network error, give a short message
+                    if isinstance(e, requests.exceptions.ConnectionError):
+                        err_msg = QCoreApplication.translate("Messages", "Unable to connect to the server.\nPlease check your internet connection.")
                     # if it's an HTTPError, try to pull the "error_description" field
-                    if isinstance(e, requests.exceptions.HTTPError):
+                    elif isinstance(e, requests.exceptions.HTTPError):
                         try:
                             err_json = e.response.json()
                             err_msg = err_json.get("error_description", str(e))
@@ -248,8 +252,11 @@ class BatchProcessor:
                 # Cache the translation results for potential future use
                 self.cache_manager._cache_translation_results(translation_cache_key, blk_list)
             except Exception as e:
+                # if it's a connection/network error, give a short message
+                if isinstance(e, requests.exceptions.ConnectionError):
+                    err_msg = QCoreApplication.translate("Messages", "Unable to connect to the server.\nPlease check your internet connection.")
                 # if it's an HTTPError, try to pull the "error_description" field
-                if isinstance(e, requests.exceptions.HTTPError):
+                elif isinstance(e, requests.exceptions.HTTPError):
                     try:
                         err_json = e.response.json()
                         err_msg = err_json.get("error_description", str(e))

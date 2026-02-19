@@ -10,6 +10,7 @@ from types import SimpleNamespace
 from datetime import datetime
 from typing import List, Dict, Tuple, Optional
 from collections import defaultdict
+from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QColor
 
 from modules.detection.processor import TextBlockDetector
@@ -280,7 +281,9 @@ class WebtoonBatchProcessor:
                 rtl = True if source_lang_english == 'Japanese' else False
                 blk_list = sort_blk_list(blk_list, rtl)
             except Exception as e:
-                if isinstance(e, requests.exceptions.HTTPError):
+                if isinstance(e, requests.exceptions.ConnectionError):
+                    err_msg = QCoreApplication.translate("Messages", "Unable to connect to the server.\nPlease check your internet connection.")
+                elif isinstance(e, requests.exceptions.HTTPError):
                     try:
                         err_msg = e.response.json().get("error_description", str(e))
                     except Exception:
@@ -351,7 +354,9 @@ class WebtoonBatchProcessor:
             try:
                 translator.translate(blk_list, combined_image, extra_context)
             except Exception as e:
-                if isinstance(e, requests.exceptions.HTTPError):
+                if isinstance(e, requests.exceptions.ConnectionError):
+                    err_msg = QCoreApplication.translate("Messages", "Unable to connect to the server.\nPlease check your internet connection.")
+                elif isinstance(e, requests.exceptions.HTTPError):
                     try:
                         err_msg = e.response.json().get("error_description", str(e))
                     except Exception:
