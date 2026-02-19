@@ -520,16 +520,6 @@ class ComicTranslate(ComicTranslateUI):
         self.manual_workflow_ctrl.ocr(single_block)
 
     def translate_image(self, single_block=False):
-<<<<<<< HEAD
-        source_lang = self.s_combo.currentText()
-        target_lang = self.t_combo.currentText()
-        if not is_there_text(self.blk_list) or not validate_translator(self, source_lang, target_lang):
-            return
-        self.loading.setVisible(True)
-        self.disable_hbutton_group()
-        
-        # Handle webtoon mode specially for visible area translation
-        if self.webtoon_mode:
         self.manual_workflow_ctrl.translate_image(single_block)
 
     def _get_visible_text_items(self):

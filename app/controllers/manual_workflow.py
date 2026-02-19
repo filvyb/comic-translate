@@ -284,10 +284,13 @@ class ManualWorkflowController:
             if not has_any_text:
                 return
             for file_path in selected_paths:
+                source_lang = self.main.image_states.get(file_path, {}).get(
+                    "source_lang", self.main.s_combo.currentText()
+                )
                 target_lang = self.main.image_states.get(file_path, {}).get(
                     "target_lang", self.main.t_combo.currentText()
                 )
-                if not validate_translator(self.main, target_lang):
+                if not validate_translator(self.main, source_lang, target_lang):
                     return
 
             self.main.loading.setVisible(True)
@@ -354,9 +357,10 @@ class ManualWorkflowController:
             )
             return
 
+        source_lang = self.main.s_combo.currentText()
         target_lang = self.main.t_combo.currentText()
         if not is_there_text(self.main.blk_list) or not validate_translator(
-            self.main, target_lang
+            self.main, source_lang, target_lang
         ):
             return
         self.main.loading.setVisible(True)
