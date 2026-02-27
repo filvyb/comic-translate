@@ -216,6 +216,7 @@ class SettingsPageUI(QtWidgets.QWidget):
         self.translated_text_checkbox = self.export_page.translated_text_checkbox
         self.inpainted_image_checkbox = self.export_page.inpainted_image_checkbox
         self.project_autosave_interval_spinbox = self.project_page.project_autosave_interval_spinbox
+        self.project_autosave_folder_input = self.project_page.project_autosave_folder_input
 
         # Add pages to stacked widget (order must match navbar order)
         self.stacked_widget.addWidget(self.personalization_page)
