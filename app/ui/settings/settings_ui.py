@@ -12,6 +12,7 @@ from .tools_page import ToolsPage
 from .credentials_page import CredentialsPage
 from .llms_page import LlmsPage
 from .text_rendering_page import TextRenderingPage
+from .project_page import ProjectPage
 from .export_page import ExportPage
 
 
@@ -171,6 +172,7 @@ class SettingsPageUI(QtWidgets.QWidget):
         )
         self.llms_page = LlmsPage(parent=self)
         self.text_rendering_page = TextRenderingPage(parent=self)
+        self.project_page = ProjectPage(parent=self)
         self.export_page = ExportPage(parent=self)
 
         # Backward-compatible attribute proxies for existing SettingsPage references
@@ -210,11 +212,10 @@ class SettingsPageUI(QtWidgets.QWidget):
         self.uppercase_checkbox = self.text_rendering_page.uppercase_checkbox
 
         # Export
-        self.auto_save_checkbox = self.export_page.auto_save_checkbox
         self.raw_text_checkbox = self.export_page.raw_text_checkbox
         self.translated_text_checkbox = self.export_page.translated_text_checkbox
         self.inpainted_image_checkbox = self.export_page.inpainted_image_checkbox
-        self.archive_save_as_combo = self.export_page.archive_save_as_combo
+        self.project_autosave_interval_spinbox = self.project_page.project_autosave_interval_spinbox
 
         # Add pages to stacked widget (order must match navbar order)
         self.stacked_widget.addWidget(self.personalization_page)
@@ -222,6 +223,7 @@ class SettingsPageUI(QtWidgets.QWidget):
         self.stacked_widget.addWidget(self.credentials_page)
         self.stacked_widget.addWidget(self.llms_page)
         self.stacked_widget.addWidget(self.text_rendering_page)
+        self.stacked_widget.addWidget(self.project_page)
         self.stacked_widget.addWidget(self.export_page)
 
         settings_layout = QtWidgets.QHBoxLayout()
@@ -273,6 +275,7 @@ class SettingsPageUI(QtWidgets.QWidget):
             {"title": self.tr("Credentials"), "avatar": MPixmap(".svg")},
             {"title": self.tr("LLMs"), "avatar": MPixmap(".svg")},
             {"title": self.tr("Text Rendering"), "avatar": MPixmap(".svg")},
+            {"title": self.tr("Project"), "avatar": MPixmap(".svg")},
             {"title": self.tr("Export"), "avatar": MPixmap(".svg")},
         ]):
             nav_card = ClickMeta(extra=False)
