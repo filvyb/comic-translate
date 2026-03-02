@@ -99,6 +99,7 @@ class NavRailMixin:
         self.export_psd_folder_browser = MClickBrowserFolderToolButton(multiple=False)
 
         self.export_menu = MMenu(parent=self)
+        self.export_menu.setMinimumWidth(80)
         export_archive_action = self.export_menu.addAction(
             MIcon("flowbite--file-zip-outline.svg"),
             self.tr("ZIP"),
