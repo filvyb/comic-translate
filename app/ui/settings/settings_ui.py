@@ -1,4 +1,4 @@
-import os
+﻿import os
 from PySide6 import QtWidgets
 from PySide6 import QtCore
 
@@ -65,8 +65,18 @@ class SettingsPageUI(QtWidgets.QWidget):
                                     self.tr("Gemini-2.5-Flash"), self.tr("Gemini-3.0-Flash"), self.tr("Gemini-3.0-Pro"), self.tr("Yandex"), self.tr("Google Translate"),
                                     self.tr("Microsoft Translator"), self.tr("Deepseek Chat"), self.tr("Grok-4.1-Fast"), self.tr("Custom"),]
         
-        self.languages = ['English', '한국어', 'Français', '简体中文',
-         'русский', 'Deutsch', 'Español', 'Italiano', 'Türkçe']
+        self.languages = [
+            'English',
+            '한국어',
+            'Français',
+            '简体中文',
+            'русский',
+            '日本語',
+            'Deutsch',
+            'Español',
+            'Italiano',
+            'Türkçe',
+        ]
         
         self.nav_cards = []  
         self.current_highlighted_nav = None
@@ -78,6 +88,7 @@ class SettingsPageUI(QtWidgets.QWidget):
             "Français": "Français",
             "简体中文": "简体中文",
             "русский": "русский",
+            "日本語": "日本語",
             "Deutsch": "Deutsch",
             "Español": "Español",
             "Italiano": "Italiano",
