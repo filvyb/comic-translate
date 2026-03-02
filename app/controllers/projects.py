@@ -487,7 +487,14 @@ class ProjectController:
         )
 
     def save_and_make(self, output_path: str):
-        self.main.run_threaded(self.save_and_make_worker, None, self.main.default_error_handler, None, output_path)
+        self.main.loading.setVisible(True)
+        self.main.run_threaded(
+            self.save_and_make_worker,
+            None,
+            self.main.default_error_handler,
+            lambda: self.main.loading.setVisible(False),
+            output_path,
+        )
 
     def export_to_psd_dialog(self):
         if not self.main.image_files:
