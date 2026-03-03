@@ -120,9 +120,6 @@ class ComicTranslate(ComicTranslateUI):
         # Populate the home screen with any previously-saved recent projects
         self.startup_home.populate(self.project_ctrl.get_recent_projects())
 
-        # Check for updates in background
-        self.settings_page.check_for_updates(is_background=True)
-
         self._processing_page_change = False  # Flag to prevent recursive page change handling
 
         # Hook the global download callback so utils can notify us
