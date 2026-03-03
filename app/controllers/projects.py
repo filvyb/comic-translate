@@ -17,7 +17,11 @@ from app.thread_worker import GenericWorker
 from app.ui.canvas.text_item import TextBlockItem
 from app.ui.canvas.text.text_item_properties import TextItemProperties
 from app.ui.canvas.save_renderer import ImageSaveRenderer
-from app.controllers.psd_exporter import PsdPageData, export_psd_pages
+try:
+    from app.controllers.psd_exporter import PsdPageData, export_psd_pages
+except ImportError:
+    PsdPageData = None
+    export_psd_pages = None
 from app.projects.project_state import (
     close_state_store,
     load_state_from_proj_file,
