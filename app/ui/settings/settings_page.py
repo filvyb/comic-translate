@@ -5,6 +5,7 @@ from PySide6 import QtWidgets, QtGui
 from PySide6.QtCore import Signal, QSettings
 from PySide6.QtGui import QFont, QFontDatabase
 
+from app.shortcuts import get_default_shortcuts
 from .settings_ui import SettingsPageUI
 from modules.utils.device import is_gpu_available
 from modules.utils.paths import get_user_data_dir, get_default_project_autosave_dir
@@ -55,6 +56,7 @@ class SettingsPage(QtWidgets.QWidget):
         self.ui.theme_combo.currentTextChanged.connect(self.on_theme_changed)
         self.ui.lang_combo.currentTextChanged.connect(self.on_language_changed)
         self.ui.font_browser.sig_files_changed.connect(self.import_font)
+        self.ui.shortcuts_page.shortcut_changed.connect(self.on_shortcut_changed)
 
     def on_theme_changed(self, theme: str):
         self.theme_changed.emit(theme)
@@ -172,9 +174,24 @@ class SettingsPage(QtWidgets.QWidget):
             },
             'llm': self.get_llm_settings(),
             'export': self.get_export_settings(),
+            'shortcuts': self.ui.shortcuts_page.get_shortcuts(),
             'credentials': self.get_credentials(),
             'save_keys': self.ui.save_keys_checkbox.isChecked(),
         }
+
+    def on_shortcut_changed(self, shortcut_id: str, sequence: str) -> None:
+        if self._loading_settings:
+            return
+
+        settings = QSettings("ComicLabs", "ComicTranslate")
+        settings.beginGroup("shortcuts")
+        settings.setValue(shortcut_id, sequence)
+        settings.endGroup()
+
+        owner = self.window()
+        shortcut_ctrl = getattr(owner, "shortcut_ctrl", None)
+        if shortcut_ctrl is not None:
+            shortcut_ctrl.apply_shortcuts()
 
     def import_font(self, file_paths: list[str]):
 
@@ -352,6 +369,18 @@ class SettingsPage(QtWidgets.QWidget):
         )
 
         settings.endGroup()  # export
+
+        settings.beginGroup('shortcuts')
+        default_shortcuts = get_default_shortcuts()
+        shortcut_values = {}
+        for shortcut_id, default_value in default_shortcuts.items():
+            shortcut_values[shortcut_id] = settings.value(shortcut_id, default_value, type=str)
+        settings.endGroup()
+        self.ui.shortcuts_page.load_shortcuts(shortcut_values)
+        owner = self.window()
+        shortcut_ctrl = getattr(owner, "shortcut_ctrl", None)
+        if shortcut_ctrl is not None:
+            shortcut_ctrl.apply_shortcuts()
 
         # Load credentials
         settings.beginGroup('credentials')
