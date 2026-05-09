@@ -222,11 +222,17 @@ class OCRFactory:
         return engine
     
     @staticmethod
-    def _create_ppocr(settings, lang: str) -> OCREngine:
-        # PPOCRv5 only supports ONNX backend
-        device = resolve_device(settings.is_gpu_enabled(), 'onnx')
-        engine = PPOCRv5Engine()
-        engine.initialize(lang=lang, device=device)
+    def _create_ppocr(settings, lang: str, backend: str = 'onnx') -> OCREngine:
+        device = resolve_device(settings.is_gpu_enabled(), backend)
+        if backend.lower() == 'torch' and torch_available():
+            from .ppocr.torch.engine import PPOCRv5TorchEngine
+            device = resolve_device(settings.is_gpu_enabled(), 'torch')
+            engine = PPOCRv5TorchEngine()
+            engine.initialize(lang=lang, device=device, use_text_lines=True)
+        else:
+            engine = PPOCRv5Engine()
+            engine.initialize(lang=lang, device=device, use_text_lines=True)
+
         return engine
     
     @staticmethod
