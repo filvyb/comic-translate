@@ -13,13 +13,13 @@ from modules.utils.paths import get_user_data_dir, get_default_project_autosave_
 # Dictionary to map old model names to the newest versions in settings
 OCR_MIGRATIONS = {
     "GPT-4o":       "GPT-4.1-mini",
-    "Gemini-2.0-Flash": "Gemini-2.5-Flash",
+    "Gemini-2.0-Flash": "Gemini-2.5-Flash-Lite",
 }
 
 TRANSLATOR_MIGRATIONS = {
     "GPT-4o":              "GPT-4.1",
     "GPT-4o mini":         "GPT-4.1-mini",
-    "Gemini-2.0-Flash":    "Gemini-2.5-Flash",
+    "Gemini-2.0-Flash":    "Gemini-2.5-Flash-Lite",
     "Gemini-2.0-Pro":      "Gemini-3.0-Pro",
     "Gemini-2.5-Pro":      "Gemini-3.0-Pro",
     "Claude-3-Opus":       "Claude-4.6-Sonnet",
