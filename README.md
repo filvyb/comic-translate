@@ -197,5 +197,3 @@ Wrapped text in bounding boxes obtained from bubbles and text.
 * [https://github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)
 * [https://github.com/RapidAI/RapidOCR](https://github.com/RapidAI/RapidOCR)
 * [https://github.com/phenom-films/dayu_widgets](https://github.com/phenom-films/dayu_widgets)
-
-

@@ -62,8 +62,8 @@ https://github.com/ogkalu2/comic-translate/assets/115248977/afb01782-71a7-4bb7-9
 <img src="https://i.imgur.com/h51XJx4.jpg" width="49%"> <img src="https://i.imgur.com/AUZSdMs.jpg" width="49%">
 
 ## 설치
-### 파이써
-파이썬 설치 (<=3.10). 설치 중에 'python.exe를 PATH에 추가'를 선택하세요.
+### 파이썬
+파이썬 설치 (3.12). 설치 중에 'python.exe를 PATH에 추가'를 선택하세요.
 ```bash
 https://www.python.org/downloads/
 ```

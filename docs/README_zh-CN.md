@@ -66,7 +66,7 @@ GPT-4o 作为翻译器。
 
 ### Python
 
-安装 Python (<=3.10)。在设置中选择 "Add python.exe to PATH"。
+安装 Python 3.12。在设置中选择 "Add python.exe to PATH"。
 ```bash
 https://www.python.org/downloads/
 ```

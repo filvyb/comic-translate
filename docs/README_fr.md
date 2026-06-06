@@ -65,7 +65,7 @@ Note : Certains ont également des traductions officielles en français
 
 ## Installation
 ### Python
-Installez Python (<=3.10). Cochez "Ajouter python.exe au PATH" lors de la configuration.
+Installez Python 3.12. Cochez "Ajouter python.exe au PATH" lors de la configuration.
 ```bash
 https://www.python.org/downloads/
 ```
